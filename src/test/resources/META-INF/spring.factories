@@ -1,0 +1,1 @@
+org.springframework.test.context.ContextCustomizerFactory = zw.org.nmrl.config.TestContainersSpringContextCustomizerFactory
