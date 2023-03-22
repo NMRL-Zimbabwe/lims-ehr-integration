@@ -32,7 +32,7 @@ import zw.org.nmrl.web.rest.errors.EmailAlreadyUsedException;
 import zw.org.nmrl.web.rest.errors.LoginAlreadyUsedException;
 import zw.org.nmrl.web.rest.errors.RecordAlreadyExistException;
 
-/**
+/**RecordAlreadyExistException
  * REST controller for managing users.
  * <p>
  * This class accesses the {@link Laboratory} entity, and needs to fetch its collection of authorities.
