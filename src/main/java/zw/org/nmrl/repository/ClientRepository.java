@@ -1,13 +1,18 @@
 package zw.org.nmrl.repository;
 
-import org.springframework.data.jpa.repository.*;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import zw.org.nmrl.domain.Client;
-import zw.org.nmrl.domain.Developer;
+import zw.org.nmrl.domain.User;
 
 /**
- * Spring Data JPA repository for the Developer entity.
+ * Spring Data JPA repository for the {@link Client} entity.
  */
-@SuppressWarnings("unused")
 @Repository
-public interface ClientRepository extends JpaRepository<Client, Long> {}
+public interface ClientRepository extends JpaRepository<Client, String> {
+    Client findByClientId(String facilityId);
+
+    Client findByNameIgnoreCase(String name);
+
+    Client findByClientIdAndParentPath(String clientId, String clientStatus);
+}

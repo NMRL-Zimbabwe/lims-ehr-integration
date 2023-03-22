@@ -1,53 +1,53 @@
 package zw.org.nmrl.domain;
 
-import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.Serializable;
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.springframework.cloud.cloudfoundry.com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
- * not an ignored comment
+ * A user.
  */
-@Schema(description = "not an ignored comment")
 @Entity
 @Table(name = "client")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-@SuppressWarnings("common-java:DuplicatedBlocks")
-public class Client implements Serializable {
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+public class Client extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+    @Column(name = "id", unique = true, nullable = false)
+    private String id;
 
-    @Column(name = "name")
+    @Column(name = "client_id", unique = true, nullable = false)
+    private String clientId;
+
     private String name;
 
-    @Column(name = "telephone")
-    private String telephone;
+    private String path;
 
-    @Column(name = "city")
-    private String city;
+    private String portal_type;
 
-    @Column(name = "state_province")
-    private String stateProvince;
+    @Column(name = "parent_path")
+    private String parentPath;
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here
+    @JsonIgnore
+    private String phone;
 
-    public Long getId() {
-        return this.id;
+    @Column(name = "email_address")
+    @JsonIgnore
+    private String emailAddress;
+
+    public String getClientId() {
+        return clientId;
     }
 
-    public Client id(Long id) {
-        this.setId(id);
-        return this;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
     }
 
     public String getName() {
@@ -58,65 +58,74 @@ public class Client implements Serializable {
         this.name = name;
     }
 
-    public String getTelephone() {
-        return telephone;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setTelephone(String telephone) {
-        this.telephone = telephone;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
-    public String getCity() {
-        return this.city;
+    public String getEmailAddress() {
+        return emailAddress;
     }
 
-    public Client city(String city) {
-        this.setCity(city);
-        return this;
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public String getId() {
+        return id;
     }
 
-    public String getStateProvince() {
-        return this.stateProvince;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public Client stateProvince(String stateProvince) {
-        this.setStateProvince(stateProvince);
-        return this;
+    public String getPath() {
+        return path;
     }
 
-    public void setStateProvince(String stateProvince) {
-        this.stateProvince = stateProvince;
+    public void setPath(String path) {
+        this.path = path;
     }
 
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and
-    // setters here
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Client)) {
-            return false;
-        }
-        return id != null && id.equals(((Client) o).id);
+    public String getPortal_type() {
+        return portal_type;
     }
 
-    @Override
-    public int hashCode() {
-        // see
-        // https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
-        return getClass().hashCode();
+    public void setPortal_type(String portal_type) {
+        this.portal_type = portal_type;
+    }
+
+    public String getParentPath() {
+        return parentPath;
+    }
+
+    public void setParentPath(String parentPath) {
+        this.parentPath = parentPath;
     }
 
     @Override
     public String toString() {
         return (
-            "Client [id=" + id + ", name=" + name + ", telephone=" + telephone + ", city=" + city + ", stateProvince=" + stateProvince + "]"
+            "Client [id=" +
+            id +
+            ", clientId=" +
+            clientId +
+            ", name=" +
+            name +
+            ", path=" +
+            path +
+            ", portal_type=" +
+            portal_type +
+            ", parentPath=" +
+            parentPath +
+            ", phone=" +
+            phone +
+            ", emailAddress=" +
+            emailAddress +
+            "]"
         );
     }
 }
