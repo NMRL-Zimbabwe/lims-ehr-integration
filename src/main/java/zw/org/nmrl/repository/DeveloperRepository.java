@@ -2,6 +2,7 @@ package zw.org.nmrl.repository;
 
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
+import zw.org.nmrl.domain.Client;
 import zw.org.nmrl.domain.Developer;
 
 /**

@@ -32,9 +32,9 @@ spring:
       indent-output: true
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:mysql://localhost:3306/limsEhrIntegration?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true
-    username: root
-    password:
+    url: jdbc:mysql://localhost:3306/lims_warehouse?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true&&allowPublicKeyRetrieval=true&update=true
+    username: lims
+    password: password
     hikari:
       poolName: Hikari
       auto-commit: false
@@ -109,3 +109,45 @@ jhipster:
 # ===================================================================
 
 # application:
+
+#Rabbitmq settings for senaite
+spring.rabbitmq.host: 192.168.0.40
+spring.rabbitmq.port: 5672
+spring.rabbitmq.username: test
+spring.rabbitmq.password: test
+spring.rabbitmq.virtualHost: /
+spring.rabbitmq.routingKey: nmrl
+
+#rabbitmq.queue: ehr
+rabbitmq:
+  host: 192.168.0.50
+  port: 5672
+  username: guest
+  password: guest
+  #routingKey: *
+  virtualHost: lmis
+
+# Integration gateway configs
+
+myConfig.myBaseGateway: https://apps.mohcc.gov.zw:8080
+myConfig.myRabbitIntegrationGateway: 192.168.0.40
+
+#myConfig.myBaseGateway: http://192.168.0.50:10080
+#myConfig.myRabbitIntegrationGateway: 192.168.0.50
+
+#local gateway configs
+myConfig.myTerminologyGateway: http://192.168.0.32
+myConfig.myRabbitLocalGateway: 192.168.0.40
+#myConfig.myTerminologyGateway: http://196.27.127.58:2480
+
+# ===================================================================
+# Application specific properties
+# Add your own application properties here, see the ApplicationProperties class
+# to have type-safe configuration, like in the JHipsterProperties above
+#
+# More documentation is available at:
+# https://www.jhipster.tech/common-application-properties/
+# ===================================================================
+
+# application:
+
