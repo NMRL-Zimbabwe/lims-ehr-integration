@@ -7,10 +7,10 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { of, Subject, from } from 'rxjs';
 
 import { DeveloperFormService } from './developer-form.service';
-import { DeveloperService } from '../service/developer.service';
+import { DeveloperService } from '../service/client.service';
 import { IDeveloper } from '../developer.model';
 
-import { DeveloperUpdateComponent } from './developer-update.component';
+import { DeveloperUpdateComponent } from './client-update.component';
 
 describe('Developer Management Update Component', () => {
   let comp: DeveloperUpdateComponent;

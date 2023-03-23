@@ -8,6 +8,7 @@
       "entities": {
         "main": "Entities",
         "developer": "Developer",
+        "client": "Client",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

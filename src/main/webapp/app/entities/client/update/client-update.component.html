@@ -1,12 +1,8 @@
 <div class="d-flex justify-content-center">
   <div class="col-8">
     <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-      <h2
-        id="jhi-developer-heading"
-        data-cy="DeveloperCreateUpdateHeading"
-        jhiTranslate="limsEhrIntegrationApp.developer.home.createOrEditLabel"
-      >
-        Create or edit a Developer
+      <h2 id="jhi-client-heading" data-cy="ClientCreateUpdateHeading" jhiTranslate="limsEhrIntegrationApp.client.home.createOrEditLabel">
+        Create or edit a Client
       </h2>
 
       <div>
@@ -18,7 +14,7 @@
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="limsEhrIntegrationApp.developer.streetAddress" for="field_streetAddress"
+          <label class="form-label" jhiTranslate="limsEhrIntegrationApp.client.streetAddress" for="field_streetAddress"
             >Street Address</label
           >
           <input
@@ -32,7 +28,7 @@
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="limsEhrIntegrationApp.developer.postalCode" for="field_postalCode">Postal Code</label>
+          <label class="form-label" jhiTranslate="limsEhrIntegrationApp.client.postalCode" for="field_postalCode">Postal Code</label>
           <input
             type="text"
             class="form-control"
@@ -44,12 +40,12 @@
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="limsEhrIntegrationApp.developer.city" for="field_city">City</label>
+          <label class="form-label" jhiTranslate="limsEhrIntegrationApp.client.city" for="field_city">City</label>
           <input type="text" class="form-control" name="city" id="field_city" data-cy="city" formControlName="city" />
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="limsEhrIntegrationApp.developer.stateProvince" for="field_stateProvince"
+          <label class="form-label" jhiTranslate="limsEhrIntegrationApp.client.stateProvince" for="field_stateProvince"
             >State Province</label
           >
           <input

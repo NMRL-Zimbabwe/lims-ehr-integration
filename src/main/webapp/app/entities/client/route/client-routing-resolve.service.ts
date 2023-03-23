@@ -4,20 +4,20 @@ import { Resolve, ActivatedRouteSnapshot, Router } from '@angular/router';
 import { Observable, of, EMPTY } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 
-import { IDeveloper } from '../developer.model';
-import { DeveloperService } from '../service/developer.service';
+import { IClient } from '../client.model';
+import { ClientService } from '../service/client.service';
 
 @Injectable({ providedIn: 'root' })
-export class DeveloperRoutingResolveService implements Resolve<IDeveloper | null> {
-  constructor(protected service: DeveloperService, protected router: Router) {}
+export class ClientRoutingResolveService implements Resolve<IClient | null> {
+  constructor(protected service: ClientService, protected router: Router) {}
 
-  resolve(route: ActivatedRouteSnapshot): Observable<IDeveloper | null | never> {
+  resolve(route: ActivatedRouteSnapshot): Observable<IClient | null | never> {
     const id = route.params['id'];
     if (id) {
       return this.service.find(id).pipe(
-        mergeMap((developer: HttpResponse<IDeveloper>) => {
-          if (developer.body) {
-            return of(developer.body);
+        mergeMap((client: HttpResponse<IClient>) => {
+          if (client.body) {
+            return of(client.body);
           } else {
             this.router.navigate(['404']);
             return EMPTY;

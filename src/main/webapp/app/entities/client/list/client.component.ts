@@ -4,19 +4,19 @@ import { ActivatedRoute, Data, ParamMap, Router } from '@angular/router';
 import { combineLatest, filter, Observable, switchMap, tap } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { IDeveloper } from '../developer.model';
+import { IClient } from '../client.model';
 
 import { ITEMS_PER_PAGE, PAGE_HEADER, TOTAL_COUNT_RESPONSE_HEADER } from 'app/config/pagination.constants';
 import { ASC, DESC, SORT, ITEM_DELETED_EVENT, DEFAULT_SORT_DATA } from 'app/config/navigation.constants';
-import { EntityArrayResponseType, DeveloperService } from '../service/developer.service';
-import { DeveloperDeleteDialogComponent } from '../delete/developer-delete-dialog.component';
+import { EntityArrayResponseType, ClientService } from '../service/client.service';
+import { ClientDeleteDialogComponent } from '../delete/client-delete-dialog.component';
 
 @Component({
-  selector: 'jhi-developer',
-  templateUrl: './developer.component.html',
+  selector: 'jhi-client',
+  templateUrl: './client.component.html',
 })
-export class DeveloperComponent implements OnInit {
-  developers?: IDeveloper[];
+export class ClientComponent implements OnInit {
+  clients?: IClient[];
   isLoading = false;
 
   predicate = 'id';
@@ -27,21 +27,21 @@ export class DeveloperComponent implements OnInit {
   page = 1;
 
   constructor(
-    protected developerService: DeveloperService,
+    protected clientService: ClientService,
     protected activatedRoute: ActivatedRoute,
     public router: Router,
     protected modalService: NgbModal
   ) {}
 
-  trackId = (_index: number, item: IDeveloper): number => this.developerService.getDeveloperIdentifier(item);
+  trackId = (_index: number, item: IClient): number => this.clientService.getClientIdentifier(item);
 
   ngOnInit(): void {
     this.load();
   }
 
-  delete(developer: IDeveloper): void {
-    const modalRef = this.modalService.open(DeveloperDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
-    modalRef.componentInstance.developer = developer;
+  delete(client: IClient): void {
+    const modalRef = this.modalService.open(ClientDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
+    modalRef.componentInstance.client = client;
     // unsubscribe not needed because closed completes on modal close
     modalRef.closed
       .pipe(
@@ -89,10 +89,10 @@ export class DeveloperComponent implements OnInit {
   protected onResponseSuccess(response: EntityArrayResponseType): void {
     this.fillComponentAttributesFromResponseHeader(response.headers);
     const dataFromBody = this.fillComponentAttributesFromResponseBody(response.body);
-    this.developers = dataFromBody;
+    this.clients = dataFromBody;
   }
 
-  protected fillComponentAttributesFromResponseBody(data: IDeveloper[] | null): IDeveloper[] {
+  protected fillComponentAttributesFromResponseBody(data: IClient[] | null): IClient[] {
     return data ?? [];
   }
 
@@ -108,7 +108,7 @@ export class DeveloperComponent implements OnInit {
       size: this.itemsPerPage,
       sort: this.getSortQueryParam(predicate, ascending),
     };
-    return this.developerService.query(queryObject).pipe(tap(() => (this.isLoading = false)));
+    return this.clientService.query(queryObject).pipe(tap(() => (this.isLoading = false)));
   }
 
   protected handleNavigation(page = this.page, predicate?: string, ascending?: boolean): void {

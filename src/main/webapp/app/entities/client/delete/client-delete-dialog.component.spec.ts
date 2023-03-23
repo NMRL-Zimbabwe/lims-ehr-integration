@@ -6,9 +6,9 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { of } from 'rxjs';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { DeveloperService } from '../service/developer.service';
+import { DeveloperService } from '../service/client.service';
 
-import { DeveloperDeleteDialogComponent } from './developer-delete-dialog.component';
+import { DeveloperDeleteDialogComponent } from './client-delete-dialog.component';
 
 describe('Developer Management Delete Component', () => {
   let comp: DeveloperDeleteDialogComponent;

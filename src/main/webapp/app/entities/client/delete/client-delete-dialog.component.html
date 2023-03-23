@@ -1,4 +1,4 @@
-<form *ngIf="developer" name="deleteForm" (ngSubmit)="confirmDelete(developer.id!)">
+<form *ngIf="client" name="deleteForm" (ngSubmit)="confirmDelete(client.id!)">
   <div class="modal-header">
     <h4 class="modal-title" data-cy="developerDeleteDialogHeading" jhiTranslate="entity.delete.title">Confirm delete operation</h4>
 
@@ -7,12 +7,8 @@
 
   <div class="modal-body">
     <jhi-alert-error></jhi-alert-error>
-    <p
-      id="jhi-delete-developer-heading"
-      jhiTranslate="limsEhrIntegrationApp.developer.delete.question"
-      [translateValues]="{ id: developer.id }"
-    >
-      Are you sure you want to delete Developer {{ developer.id }}?
+    <p id="jhi-delete-client-heading" jhiTranslate="limsEhrIntegrationApp.client.delete.question" [translateValues]="{ id: client.id }">
+      Are you sure you want to delete Developer {{ client.id }}?
     </p>
   </div>
 
@@ -21,7 +17,7 @@
       <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
     </button>
 
-    <button id="jhi-confirm-delete-developer" data-cy="entityConfirmDeleteButton" type="submit" class="btn btn-danger">
+    <button id="jhi-confirm-delete-client" data-cy="entityConfirmDeleteButton" type="submit" class="btn btn-danger">
       <fa-icon icon="times"></fa-icon>&nbsp;<span jhiTranslate="entity.action.delete">Delete</span>
     </button>
   </div>

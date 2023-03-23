@@ -1,26 +1,26 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
-import { IDeveloper } from '../developer.model';
-import { sampleWithRequiredData, sampleWithNewData, sampleWithPartialData, sampleWithFullData } from '../developer.test-samples';
+import { IClient } from '../client.model';
+import { sampleWithRequiredData, sampleWithNewData, sampleWithPartialData, sampleWithFullData } from '../client.test-samples';
 
-import { DeveloperService } from './developer.service';
+import { ClientService } from './client.service';
 
-const requireRestSample: IDeveloper = {
+const requireRestSample: IClient = {
   ...sampleWithRequiredData,
 };
 
 describe('Developer Service', () => {
-  let service: DeveloperService;
+  let service: ClientService;
   let httpMock: HttpTestingController;
-  let expectedResult: IDeveloper | IDeveloper[] | boolean | null;
+  let expectedResult: IClient | IClient[] | boolean | null;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
     });
     expectedResult = null;
-    service = TestBed.inject(DeveloperService);
+    service = TestBed.inject(ClientService);
     httpMock = TestBed.inject(HttpTestingController);
   });
 
@@ -38,11 +38,11 @@ describe('Developer Service', () => {
 
     it('should create a Developer', () => {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const developer = { ...sampleWithNewData };
+      const client = { ...sampleWithNewData };
       const returnedFromService = { ...requireRestSample };
       const expected = { ...sampleWithRequiredData };
 
-      service.create(developer).subscribe(resp => (expectedResult = resp.body));
+      service.create(client).subscribe(resp => (expectedResult = resp.body));
 
       const req = httpMock.expectOne({ method: 'POST' });
       req.flush(returnedFromService);
@@ -50,11 +50,11 @@ describe('Developer Service', () => {
     });
 
     it('should update a Developer', () => {
-      const developer = { ...sampleWithRequiredData };
+      const client = { ...sampleWithRequiredData };
       const returnedFromService = { ...requireRestSample };
       const expected = { ...sampleWithRequiredData };
 
-      service.update(developer).subscribe(resp => (expectedResult = resp.body));
+      service.update(client).subscribe(resp => (expectedResult = resp.body));
 
       const req = httpMock.expectOne({ method: 'PUT' });
       req.flush(returnedFromService);
@@ -98,57 +98,57 @@ describe('Developer Service', () => {
 
     describe('addDeveloperToCollectionIfMissing', () => {
       it('should add a Developer to an empty array', () => {
-        const developer: IDeveloper = sampleWithRequiredData;
-        expectedResult = service.addDeveloperToCollectionIfMissing([], developer);
+        const client: IClient = sampleWithRequiredData;
+        expectedResult = service.addDeveloperToCollectionIfMissing([], client);
         expect(expectedResult).toHaveLength(1);
-        expect(expectedResult).toContain(developer);
+        expect(expectedResult).toContain(client);
       });
 
       it('should not add a Developer to an array that contains it', () => {
-        const developer: IDeveloper = sampleWithRequiredData;
-        const developerCollection: IDeveloper[] = [
+        const client: IClient = sampleWithRequiredData;
+        const developerCollection: IClient[] = [
           {
-            ...developer,
+            ...client,
           },
           sampleWithPartialData,
         ];
-        expectedResult = service.addDeveloperToCollectionIfMissing(developerCollection, developer);
+        expectedResult = service.addDeveloperToCollectionIfMissing(developerCollection, client);
         expect(expectedResult).toHaveLength(2);
       });
 
       it("should add a Developer to an array that doesn't contain it", () => {
-        const developer: IDeveloper = sampleWithRequiredData;
-        const developerCollection: IDeveloper[] = [sampleWithPartialData];
-        expectedResult = service.addDeveloperToCollectionIfMissing(developerCollection, developer);
+        const client: IClient = sampleWithRequiredData;
+        const developerCollection: IClient[] = [sampleWithPartialData];
+        expectedResult = service.addDeveloperToCollectionIfMissing(developerCollection, client);
         expect(expectedResult).toHaveLength(2);
-        expect(expectedResult).toContain(developer);
+        expect(expectedResult).toContain(client);
       });
 
       it('should add only unique Developer to an array', () => {
-        const developerArray: IDeveloper[] = [sampleWithRequiredData, sampleWithPartialData, sampleWithFullData];
-        const developerCollection: IDeveloper[] = [sampleWithRequiredData];
+        const developerArray: IClient[] = [sampleWithRequiredData, sampleWithPartialData, sampleWithFullData];
+        const developerCollection: IClient[] = [sampleWithRequiredData];
         expectedResult = service.addDeveloperToCollectionIfMissing(developerCollection, ...developerArray);
         expect(expectedResult).toHaveLength(3);
       });
 
       it('should accept varargs', () => {
-        const developer: IDeveloper = sampleWithRequiredData;
-        const developer2: IDeveloper = sampleWithPartialData;
-        expectedResult = service.addDeveloperToCollectionIfMissing([], developer, developer2);
+        const client: IClient = sampleWithRequiredData;
+        const developer2: IClient = sampleWithPartialData;
+        expectedResult = service.addDeveloperToCollectionIfMissing([], client, developer2);
         expect(expectedResult).toHaveLength(2);
-        expect(expectedResult).toContain(developer);
+        expect(expectedResult).toContain(client);
         expect(expectedResult).toContain(developer2);
       });
 
       it('should accept null and undefined values', () => {
-        const developer: IDeveloper = sampleWithRequiredData;
-        expectedResult = service.addDeveloperToCollectionIfMissing([], null, developer, undefined);
+        const client: IClient = sampleWithRequiredData;
+        expectedResult = service.addDeveloperToCollectionIfMissing([], null, client, undefined);
         expect(expectedResult).toHaveLength(1);
-        expect(expectedResult).toContain(developer);
+        expect(expectedResult).toContain(client);
       });
 
       it('should return initial array if no Developer is added', () => {
-        const developerCollection: IDeveloper[] = [sampleWithRequiredData];
+        const developerCollection: IClient[] = [sampleWithRequiredData];
         expectedResult = service.addDeveloperToCollectionIfMissing(developerCollection, undefined, null);
         expect(expectedResult).toEqual(developerCollection);
       });
