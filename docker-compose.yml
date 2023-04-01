@@ -1,0 +1,69 @@
+version: '3.7'
+
+services:
+  data-mart:
+    image: springboot-docker-compose-app:1
+    restart: unless-stopped
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://datamart-db:3306/lims_warehouse?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true
+      - spring_rabbitmq_host=rabbitmq
+      - spring_rabbitmq_port=5672
+      - spring_rabbitmq_username=root
+      - spring_rabbitmq_password=Nmrl123456
+      - spring_rabbitmq_routingKey=nmrl
+      - rabbitmq_host=apps.mohcc.gov.zw
+      - rabbitmq_port=5672
+      - rabbitmq_username=guest
+      - rabbitmq_password=guest
+      - rabbitmq_virtualHost=lmis
+    ports:
+      - '8080:8080'
+    depends_on:
+      - datamart-db
+    networks:
+      - datamartnet
+
+  datamart-db:
+    container_name: datamart-mysql
+    restart: always
+    image: mysql:5.7
+    volumes:
+      - db_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_DATABASE: lims_warehouse
+      MYSQL_USER: lims
+      MYSQL_PASSWORD: password
+    ports:
+      - 3307:3306
+    networks:
+      - datamartnet
+
+  rabbitmq:
+    container_name: rabbitmq_server
+    restart: always
+    image: rabbitmq:3-management
+    hostname: rabbitmq
+    volumes:
+      - /var/lib/rabbitmq:/var/lib/rabbitmq
+    ports:
+      - '15672:15672'
+      - '5672:5672'
+    expose:
+      - '15672'
+      - '5672'
+    networks:
+      - datamartnet
+
+volumes:
+  db_data:
+  rabbitmq:
+    driver: local
+
+networks:
+  datamartnet:
+    driver: bridge
