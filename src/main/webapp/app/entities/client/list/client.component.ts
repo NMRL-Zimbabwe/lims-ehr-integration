@@ -33,7 +33,7 @@ export class ClientComponent implements OnInit {
     protected modalService: NgbModal
   ) {}
 
-  trackId = (_index: number, item: IClient): number => this.clientService.getClientIdentifier(item);
+  //trackId = (_index: string, item: IClient): string => this.clientService.getClientIdentifier(item);
 
   ngOnInit(): void {
     this.load();

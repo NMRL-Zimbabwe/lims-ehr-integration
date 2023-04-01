@@ -18,10 +18,10 @@ type ClientFormDefaults = Pick<NewClient, 'id'>;
 
 type ClientFormGroupContent = {
   id: FormControl<IClient['id'] | NewClient['id']>;
-  streetAddress: FormControl<IClient['streetAddress']>;
-  postalCode: FormControl<IClient['postalCode']>;
-  city: FormControl<IClient['city']>;
-  stateProvince: FormControl<IClient['stateProvince']>;
+  name: FormControl<IClient['name']>;
+  clientId: FormControl<IClient['clientId']>;
+  parentPath: FormControl<IClient['parentPath']>;
+  phone: FormControl<IClient['phone']>;
 };
 
 export type ClientFormGroup = FormGroup<ClientFormGroupContent>;
@@ -41,10 +41,10 @@ export class ClientFormService {
           validators: [Validators.required],
         }
       ),
-      streetAddress: new FormControl(developerRawValue.streetAddress),
-      postalCode: new FormControl(developerRawValue.postalCode),
-      city: new FormControl(developerRawValue.city),
-      stateProvince: new FormControl(developerRawValue.stateProvince),
+      name: new FormControl(developerRawValue.name),
+      clientId: new FormControl(developerRawValue.clientId),
+      parentPath: new FormControl(developerRawValue.parentPath),
+      phone: new FormControl(developerRawValue.phone),
     });
   }
 

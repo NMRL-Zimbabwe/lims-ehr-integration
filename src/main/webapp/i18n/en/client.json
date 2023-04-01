@@ -20,8 +20,8 @@
       "id": "ID",
       "name": "Name",
       "clientId": "Client ID",
-      "city": "City",
-      "stateProvince": "State Province"
+      "parentPath": "Status",
+      "phone": "phone"
     }
   }
 }

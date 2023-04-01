@@ -1,5 +1,6 @@
 package zw.org.nmrl.service.impl;
 
+import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -37,5 +38,11 @@ public class ClientServiceImpl implements ClientService {
     public Page<Client> findAll(Pageable pageable) {
         log.debug("Request to get all Clients");
         return clientRepository.findAll(pageable);
+    }
+
+    @Override
+    public Optional<Client> findOne(String id) {
+        log.debug("Request get client : {}", id);
+        return clientRepository.findById(id);
     }
 }
