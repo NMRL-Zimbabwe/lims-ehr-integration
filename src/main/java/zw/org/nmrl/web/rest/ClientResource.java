@@ -3,6 +3,7 @@ package zw.org.nmrl.web.rest;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,6 +26,7 @@ import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 import zw.org.nmrl.domain.Client;
 import zw.org.nmrl.domain.Developer;
+import zw.org.nmrl.repository.ClientRepository;
 import zw.org.nmrl.service.ClientService;
 import zw.org.nmrl.web.rest.errors.BadRequestAlertException;
 
@@ -40,6 +43,9 @@ public class ClientResource {
 
     @Autowired
     ClientService clientService;
+
+    @Autowired
+    ClientRepository clientRepository;
 
     /**
      * {@code POST  /developers} : Create a new developer.
@@ -82,5 +88,27 @@ public class ClientResource {
         log.debug("REST request to get Client : {}", id);
         Optional<Client> client = clientService.findOne(id);
         return ResponseUtil.wrapOrNotFound(client);
+    }
+
+    @PutMapping("/clients/{id}")
+    public ResponseEntity<Client> updateClient(@PathVariable(value = "id", required = false) final String id, @RequestBody Client client)
+        throws URISyntaxException {
+        log.debug("REST request to update Client : {}, {}", id, client);
+        if (client.getId() == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        if (!Objects.equals(id, client.getId())) {
+            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+        }
+
+        if (!clientRepository.existsById(id)) {
+            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+        }
+
+        Client result = clientService.update(client);
+        return ResponseEntity
+            .ok()
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, client.getId().toString()))
+            .body(result);
     }
 }

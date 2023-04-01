@@ -14,4 +14,6 @@ public interface ClientService {
     Page<Client> findAll(Pageable pageable);
 
     Optional<Client> findOne(String id);
+
+    Client update(Client client);
 }

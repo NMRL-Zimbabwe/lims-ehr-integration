@@ -28,10 +28,6 @@ public class ClientServiceImpl implements ClientService {
         return null;
     }
 
-    Client update(Client client) {
-        return null;
-    }
-
     void delete(Client client) {}
 
     @Override
@@ -44,5 +40,11 @@ public class ClientServiceImpl implements ClientService {
     public Optional<Client> findOne(String id) {
         log.debug("Request get client : {}", id);
         return clientRepository.findById(id);
+    }
+
+    @Override
+    public Client update(Client client) {
+        log.debug("Request to update Client : {}", client);
+        return clientRepository.save(client);
     }
 }
