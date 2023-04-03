@@ -21,6 +21,8 @@ export class ClientComponent implements OnInit {
 
   predicate = 'id';
   ascending = true;
+  queryString = '';
+  showRegistrationButtons = true;
 
   itemsPerPage = ITEMS_PER_PAGE;
   totalItems = 0;
@@ -37,6 +39,14 @@ export class ClientComponent implements OnInit {
 
   ngOnInit(): void {
     this.load();
+  }
+
+  searchClient(event: any): void {
+    //this.showRegistrationButtons = false;
+    this.queryString = event.target.value;
+    this.clientService.search({ text: event.target.value, query: '' }).subscribe((res: any) => {
+      this.clients = res.body;
+    });
   }
 
   delete(client: IClient): void {

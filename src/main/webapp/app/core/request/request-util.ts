@@ -1,5 +1,10 @@
 import { HttpParams } from '@angular/common/http';
 
+export interface Search {
+  query?: string;
+  text?: string;
+}
+
 export const createRequestOption = (req?: any): HttpParams => {
   let options: HttpParams = new HttpParams();
 

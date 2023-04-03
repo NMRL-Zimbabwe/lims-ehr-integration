@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 import { isPresent } from 'app/core/util/operators';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
-import { createRequestOption } from 'app/core/request/request-util';
+import { createRequestOption, Search } from 'app/core/request/request-util';
 import { IClient, NewClient } from '../client.model';
 
 export type PartialUpdateDeveloper = Partial<IClient> & Pick<IClient, 'id'>;
@@ -49,6 +49,11 @@ export class ClientService {
 
   compareDeveloper(o1: Pick<IClient, 'id'> | null, o2: Pick<IClient, 'id'> | null): boolean {
     return o1 && o2 ? this.getClientIdentifier(o1) === this.getClientIdentifier(o2) : o1 === o2;
+  }
+
+  search(req?: Search): Observable<HttpResponse<IClient[]>> {
+    const options = createRequestOption(req);
+    return this.http.get<IClient[]>(`${this.resourceUrl}/search`, { params: options, observe: 'response' });
   }
 
   addDeveloperToCollectionIfMissing<Type extends Pick<IClient, 'id'>>(
