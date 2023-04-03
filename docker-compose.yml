@@ -9,6 +9,8 @@ services:
       dockerfile: Dockerfile
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://192.168.0.70:3306/lims_warehouse?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true
+      - SPRING_DATASOURCE_USERNAME=lims
+      - SPRING_DATASOURCE_PASSWORD=password
       - spring_rabbitmq_host=rabbitmq
       - spring_rabbitmq_port=5672
       - spring_rabbitmq_username=root
