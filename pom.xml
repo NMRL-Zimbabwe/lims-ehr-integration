@@ -7,7 +7,7 @@
 
     <groupId>zw.org.nmrl</groupId>
     <artifactId>lims-ehr-integration</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <packaging>jar</packaging>
     <name>Lims Ehr Integration</name>
     <description>Description for limsEhrIntegration</description>
@@ -119,7 +119,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-amqp</artifactId>
 		</dependency>
-    
+
         <dependency>
             <groupId>tech.jhipster</groupId>
             <artifactId>jhipster-framework</artifactId>
