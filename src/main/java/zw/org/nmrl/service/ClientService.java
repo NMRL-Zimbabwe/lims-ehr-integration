@@ -16,4 +16,6 @@ public interface ClientService {
     Optional<Client> findOne(String id);
 
     Client update(Client client);
+
+    Page<Client> search(Pageable pageable, String text);
 }

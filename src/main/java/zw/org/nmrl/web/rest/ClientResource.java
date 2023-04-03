@@ -2,6 +2,8 @@ package zw.org.nmrl.web.rest;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -11,7 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,7 +29,7 @@ import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 import zw.org.nmrl.domain.Client;
-import zw.org.nmrl.domain.Developer;
+import zw.org.nmrl.domain.Patient;
 import zw.org.nmrl.repository.ClientRepository;
 import zw.org.nmrl.service.ClientService;
 import zw.org.nmrl.web.rest.errors.BadRequestAlertException;
@@ -35,6 +39,10 @@ import zw.org.nmrl.web.rest.errors.BadRequestAlertException;
 public class ClientResource {
 
     private final Logger log = LoggerFactory.getLogger(ClientResource.class);
+
+    private static final List<String> ALLOWED_ORDERED_PROPERTIES = Collections.unmodifiableList(
+        Arrays.asList("id", "name", "clientId", "phone")
+    );
 
     private static final String ENTITY_NAME = "client";
 
@@ -110,5 +118,21 @@ public class ClientResource {
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, client.getId().toString()))
             .body(result);
+    }
+
+    @GetMapping("/clients/search")
+    public ResponseEntity<List<Client>> searchClient(Pageable pageable, String text) {
+        log.debug("REST request text serach : {}", text);
+        if (!onlyContainsAllowedProperties(pageable)) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        final Page<Client> page = clientService.search(pageable, text);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
+
+    private boolean onlyContainsAllowedProperties(Pageable pageable) {
+        return pageable.getSort().stream().map(Sort.Order::getProperty).allMatch(ALLOWED_ORDERED_PROPERTIES::contains);
     }
 }

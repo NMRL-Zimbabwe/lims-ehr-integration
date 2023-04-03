@@ -47,4 +47,9 @@ public class ClientServiceImpl implements ClientService {
         log.debug("Request to update Client : {}", client);
         return clientRepository.save(client);
     }
+
+    @Override
+    public Page<Client> search(Pageable pageable, String text) {
+        return clientRepository.findByNameContainingIgnoreCaseOrClientIdContainingIgnoreCase(pageable, text, text);
+    }
 }

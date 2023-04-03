@@ -18,8 +18,20 @@
         <span jhiTranslate="limsEhrIntegrationApp.client.home.createLabel"> Create a new Client </span>
       </button>
     </div>
+    <hr />
+    <div class="patient-search row justify-content-around">
+      <div class="col-4">
+        <input type="text" placeholder="Client Patient ID ......" class="form-control" />
+      </div>
+      <div class="col-8 d-flex">
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-patient">
+          <fa-icon icon="plus"></fa-icon>
+          <span>Search Patient</span>
+        </button>
+      </div>
+    </div>
   </h2>
-
+  <!-- (input)="searchPatient($event)" click)="searchPatient($event)" -->
   <jhi-alert-error></jhi-alert-error>
 
   <jhi-alert></jhi-alert>
