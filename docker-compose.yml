@@ -8,7 +8,7 @@ services:
       context: ./
       dockerfile: Dockerfile
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://datamart-db:3306/lims_warehouse?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true
+      - SPRING_DATASOURCE_URL=jdbc:mysql://192.168.0.70:3306/lims_warehouse?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true
       - spring_rabbitmq_host=rabbitmq
       - spring_rabbitmq_port=5672
       - spring_rabbitmq_username=root
@@ -21,8 +21,8 @@ services:
       - rabbitmq_virtualHost=lmis
     ports:
       - '8080:8080'
-    depends_on:
-      - datamart-db
+    #    depends_on:
+    #      - datamart-db
     networks:
       - datamartnet
 
