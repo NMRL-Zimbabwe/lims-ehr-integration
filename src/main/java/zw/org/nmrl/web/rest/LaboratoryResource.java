@@ -2,6 +2,8 @@ package zw.org.nmrl.web.rest;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import javax.validation.Valid;
@@ -10,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +26,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
+import zw.org.nmrl.domain.Client;
 import zw.org.nmrl.domain.Laboratory;
 import zw.org.nmrl.repository.LaboratoryRepository;
 import zw.org.nmrl.service.LaboratoryService;
@@ -61,6 +65,10 @@ import zw.org.nmrl.web.rest.errors.RecordAlreadyExistException;
 public class LaboratoryResource {
 
     private final Logger log = LoggerFactory.getLogger(LaboratoryResource.class);
+
+    private static final List<String> ALLOWED_ORDERED_PROPERTIES = Collections.unmodifiableList(
+        Arrays.asList("id", "name", "code", "type")
+    );
 
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
@@ -141,5 +149,21 @@ public class LaboratoryResource {
         final Page<LaboratoryDTO> page = laboratoryService.getAllLabs(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
+
+    @GetMapping("/laboratories/search")
+    public ResponseEntity<List<Laboratory>> searchLaboratory(Pageable pageable, String text) {
+        log.debug("REST request text serach : {}", text);
+        if (!onlyContainsAllowedProperties(pageable)) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        final Page<Laboratory> page = laboratoryService.search(pageable, text);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
+
+    private boolean onlyContainsAllowedProperties(Pageable pageable) {
+        return pageable.getSort().stream().map(Sort.Order::getProperty).allMatch(ALLOWED_ORDERED_PROPERTIES::contains);
     }
 }

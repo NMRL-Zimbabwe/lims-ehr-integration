@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import zw.org.nmrl.config.Constants;
 import zw.org.nmrl.domain.Authority;
+import zw.org.nmrl.domain.Client;
 import zw.org.nmrl.domain.Laboratory;
 import zw.org.nmrl.repository.LaboratoryRepository;
 import zw.org.nmrl.service.dto.LaboratoryDTO;
@@ -101,5 +102,9 @@ public class LaboratoryService {
     @Transactional(readOnly = true)
     public Page<LaboratoryDTO> getAllLabs(Pageable pageable) {
         return laboratoryRepository.findAll(pageable).map(LaboratoryDTO::new);
+    }
+
+    public Page<Laboratory> search(Pageable pageable, String text) {
+        return laboratoryRepository.findByNameContainingIgnoreCaseOrCodeContainingIgnoreCase(pageable, text, text);
     }
 }

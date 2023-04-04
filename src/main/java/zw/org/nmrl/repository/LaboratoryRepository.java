@@ -1,11 +1,12 @@
 package zw.org.nmrl.repository;
 
 import java.util.Optional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import zw.org.nmrl.domain.Laboratory;
 import zw.org.nmrl.domain.Sample;
-import zw.org.nmrl.service.dto.LaboratoryDTO;
 
 /**
  * Spring Data JPA repository for the {@link Sample} entity.
@@ -19,4 +20,6 @@ public interface LaboratoryRepository extends JpaRepository<Laboratory, String> 
     Optional<Laboratory> findOneByCode(String code);
 
     Optional<Laboratory> findOneByCodeIgnoreCase(String email);
+
+    Page<Laboratory> findByNameContainingIgnoreCaseOrCodeContainingIgnoreCase(Pageable pageable, String text, String text2);
 }
