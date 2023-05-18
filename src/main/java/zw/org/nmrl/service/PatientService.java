@@ -172,8 +172,8 @@ public class PatientService {
         if (arts != null) {
             String artNumber = "";
             for (PersonArt number : arts) {
-                log.info("Update patient ART Details: {}", number);
                 if (number != null) {
+                    log.info("Update patient ART Details: {}", number);
                     artNumber = number.getNumber();
                 } else {
                     updatePatientErrorLog(patient, "ART number is null");
