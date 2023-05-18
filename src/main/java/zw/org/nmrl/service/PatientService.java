@@ -175,6 +175,11 @@ public class PatientService {
                 if (number != null) {
                     log.info("Update patient ART Details: {}", number);
                     artNumber = number.getNumber();
+
+                    if (number.getNumber() == null) {
+                        updatePatientErrorLog(patient, "ART  number is null");
+                        log.info("Art number is null or empty");
+                    }
                 } else {
                     updatePatientErrorLog(patient, "ART number is null");
                 }
