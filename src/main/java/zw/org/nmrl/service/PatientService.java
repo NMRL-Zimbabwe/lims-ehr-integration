@@ -180,7 +180,7 @@ public class PatientService {
                 }
             }
 
-            log.info("Update patient ART Details: {}", artNumber);
+            //log.info("Update patient ART Details: {}", artNumber);
 
             patient.setArt(artNumber);
             patient.setRetry(patient.getRetry() + 1);
