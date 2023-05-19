@@ -281,6 +281,13 @@ public class SendToLimsService {
                         sampleType = "Blood plasma";
                     }
                     break;
+                case "epworth":
+                    if (request.getSampleId().equals("DBS")) {
+                        sampleType = "Dried Blood Spot";
+                    } else {
+                        sampleType = "Blood plasma";
+                    }
+                    break;
             }
 
             if (sampleType == null) {
